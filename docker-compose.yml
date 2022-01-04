@@ -3,6 +3,9 @@ version: '3.7'
 services:
   postgres:
     image: postgres
+    container_name: fi_postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data    
     restart: always
     ports: 
       - "5432:5432"
@@ -13,6 +16,7 @@ services:
       POSTGRES_DB: "master"
   pgadmin:
     image: dpage/pgadmin4
+    container_name: fi_pgadmin
     ports:
       - "5656:80"
     environment: 
@@ -20,5 +24,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "admin"
     depends_on:
       - postgres
-  
+volumes:
+  pgdata:
     
