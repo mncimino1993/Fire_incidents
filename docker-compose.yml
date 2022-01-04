@@ -24,6 +24,19 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "admin"
     depends_on:
       - postgres
+  dbt-postgres:
+    image: dbt-postgres
+    container_name: fi_dbt
+    command: run
+    depends_on: 
+    - postgres
+    volumes:
+      - type: bind
+        source: ./
+        target: /usr/app
+      - type: bind
+        source: ./.dbt
+        target: /root/.dbt/
 volumes:
   pgdata:
     
