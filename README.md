@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Install [Docker](https://docs.docker.com/engine/install/) on your machine:
+Install [Docker](https://docs.docker.com/engine/install/) on your machine.
 
 ## Walkthrough
 
