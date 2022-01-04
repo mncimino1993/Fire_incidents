@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports: 
+      - "5432:5432"
+    environment:
+      DATABASE_HOST: "127.0.0.1"
+      POSTGRES_USER: "pgadmin"
+      POSTGRES_PASSWORD: "thisIsASecurePassword33@"
+      POSTGRES_DB: "master"
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5656:80"
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    depends_on:
+      - postgres
+  
+    
