@@ -1,0 +1,23 @@
+postgress:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      threads: 1
+      host: 127.0.0.1
+      port: 5432
+      user: pgadmin
+      pass: thisIsASecurePassword33@
+      dbname: master
+      schema: public
+
+    prod:
+      type: postgres
+      threads: 1
+      host: 127.0.0.1
+      port: 5432
+      user: pgadmin
+      pass: thisIsASecurePassword33@
+      dbname: master
+      schema: public
+
