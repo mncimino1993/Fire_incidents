@@ -8,7 +8,7 @@ Remember to follow the [Post-installation steps](https://docs.docker.com/engine/
 
 ## Walkthrough
 
-Navigate to project folder, add execute permission to start.sh and runit:
+Navigate to project folder, add execute permission to the start.sh script and run it:
 ```
 chmod +X start.sh && ./start.sh
 ```
