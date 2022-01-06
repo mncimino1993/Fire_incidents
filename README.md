@@ -8,8 +8,7 @@ Remember to follow the [Post-installation steps](https://docs.docker.com/engine/
 
 ## Walkthrough
 
-Navigate to project folder and run docker-compose up:
+Navigate to project folder and run:
 ```
-docker-compose up
-```
-
+docker-compose build && docker-compose up
+``` 
