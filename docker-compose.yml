@@ -2,19 +2,16 @@ version: '3.7'
 
 services:
   postgres:
+    networks:
+      - fi_network
     image: postgres
     container_name: fi_postgres
     volumes:
       - pgdata:/var/lib/postgresql/data    
     restart: always
-    ports: 
-      - "5432:5432"
-    environment:
-      DATABASE_HOST: "127.0.0.1"
-      POSTGRES_USER: "pgadmin"
-      POSTGRES_PASSWORD: "thisIsASecurePassword33@"
-      POSTGRES_DB: "master"
   pgadmin:
+    networks:
+      - fi_network  
     image: dpage/pgadmin4
     container_name: fi_pgadmin
     ports:
@@ -25,7 +22,13 @@ services:
     depends_on:
       - postgres
   dbt-postgres:
+    networks:
+      - fi_network  
     image: dbt-postgres
+    build:
+      context: ./
+      dockerfile: Dockerfile-dbt
+      target: dbt-postgres
     container_name: fi_dbt
     command: run
     depends_on: 
@@ -37,6 +40,20 @@ services:
       - type: bind
         source: ./.dbt
         target: /root/.dbt/
+  elt-cron:
+    networks:
+      - fi_network
+    image: etl-cron
+    build:
+      context: ./
+      dockerfile: Dockerfile-cron
+    container_name: fi_etl_cron
+    command: cron -f
+    depends_on: 
+    - dbt-postgres
+    - postgres        
 volumes:
   pgdata:
+networks:
+  fi_network:
     

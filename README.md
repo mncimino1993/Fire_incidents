@@ -8,5 +8,5 @@ Install [Docker](https://docs.docker.com/engine/install/) on your machine.
 
 Navigate to project folder and run start.sh:
 ```
-./start.sh
+docker-compose up
 ```

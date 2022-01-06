@@ -7,7 +7,7 @@ postgress:
       host: postgres
       port: 5432
       user: pgadmin
-      pass: thisIsASecurePassword33@
+      pass: thisIsASecurePassword33!
       dbname: master
       schema: public
 
@@ -17,7 +17,7 @@ postgress:
       host: postgres
       port: 5432
       user: pgadmin
-      pass: thisIsASecurePassword33@
+      pass: thisIsASecurePassword33!
       dbname: master
       schema: public
 
