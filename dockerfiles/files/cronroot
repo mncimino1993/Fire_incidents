@@ -12,4 +12,4 @@
 # day of week    0-7 (0 or 7 is Sun, or use names)
 #
 #--------------------------------------------------
-*/30 * * * * python3 -u /etc/cron.d/getFireData.py > /proc/1/fd/1 2>/proc/1/fd/2
+0 * * * * python3 -u /etc/getFireData.py > /proc/1/fd/1 2>/proc/1/fd/2

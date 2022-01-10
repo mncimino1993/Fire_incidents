@@ -8,16 +8,16 @@ postgress:
       port: 5432
       user: pgadmin
       pass: thisIsASecurePassword33!
-      dbname: master
+      dbname: postgres
       schema: public
-
-    prod:
-      type: postgres
-      threads: 1
-      host: postgres
-      port: 5432
-      user: pgadmin
-      pass: thisIsASecurePassword33!
-      dbname: master
-      schema: public
+#
+#    prod:
+#      type: postgres
+#      threads: 1
+#      host: postgres
+#      port: 5432
+#      user: pgadmin
+#      pass: thisIsASecurePassword33!
+#      dbname: postgres
+#      schema: public
 

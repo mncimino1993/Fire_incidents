@@ -7,8 +7,22 @@ services:
     image: postgres
     container_name: fi_postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data    
+      - pgdata:/var/lib/postgresql/data
+      - ./dockerfiles/files/init.sql:/docker-entrypoint-initdb.d/init.sql  
     restart: always
+    environment:
+      DATABASE_HOST: "127.0.0.1"
+      POSTGRES_USER: "pgadmin"
+      POSTGRES_PASSWORD: "thisIsASecurePassword33!"
+      POSTGRES_DB: "postgres"  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pgadmin -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - daily
+      - seed
   pgadmin:
     networks:
       - fi_network  
@@ -20,19 +34,38 @@ services:
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
       PGADMIN_DEFAULT_PASSWORD: "admin"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    profiles:
+      - daily
+      - seed         
+  elt-seed:
+    networks:
+      - fi_network
+    image: etl-seed
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile-etl
+    container_name: fi_etl_seed
+    command: python3 -u /etc/getFireData.py
+    depends_on: 
+      postgres:
+        condition: service_healthy 
+    profiles:
+      - seed               
   dbt-postgres:
     networks:
       - fi_network  
     image: dbt-postgres
     build:
-      context: ./
+      context: ./dockerfiles
       dockerfile: Dockerfile-dbt
       target: dbt-postgres
     container_name: fi_dbt
     command: run
-    depends_on: 
-    - postgres
+    depends_on:
+      postgres:
+        condition: service_healthy 
     volumes:
       - type: bind
         source: ./
@@ -40,18 +73,23 @@ services:
       - type: bind
         source: ./.dbt
         target: /root/.dbt/
+    profiles:
+      - daily
+      - seed
   elt-cron:
     networks:
       - fi_network
     image: etl-cron
     build:
-      context: ./
-      dockerfile: Dockerfile-cron
+      context: ./dockerfiles
+      dockerfile: Dockerfile-etl
     container_name: fi_etl_cron
     command: cron -f
-    depends_on: 
-    - dbt-postgres
-    - postgres        
+    depends_on:
+      postgres:
+        condition: service_healthy 
+    profiles:
+    - daily    
 volumes:
   pgdata:
 networks:

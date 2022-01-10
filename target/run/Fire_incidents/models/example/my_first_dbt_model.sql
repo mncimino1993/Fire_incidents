@@ -1,6 +1,6 @@
 
 
-  create  table "master"."public"."my_first_dbt_model__dbt_tmp"
+  create  table "postgres"."public"."my_first_dbt_model__dbt_tmp"
   as (
     /*
     Welcome to your first dbt model!

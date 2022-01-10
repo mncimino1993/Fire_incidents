@@ -8,7 +8,13 @@ Remember to follow the [Post-installation steps](https://docs.docker.com/engine/
 
 ## Walkthrough
 
-Navigate to project folder and run:
+1) Navigate to project folder and run:
 ```
-docker-compose build && docker-compose up
+docker-compose --profile seed up --build
 ``` 
+This will build the required containers, start them and begin seeding the dabase.
+
+2) Once the database finishes loading all the records, the daily loader can be started runing:
+```
+docker-compose up --build elt-cron
+```

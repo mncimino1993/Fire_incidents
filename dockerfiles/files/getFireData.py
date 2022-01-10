@@ -83,9 +83,9 @@ while True:
     df = df.drop(columns='point')
     df = pd.concat([df,dfc],axis=1)
     if (start == 0 ):
-        df.to_sql('STG_RAW', engine, if_exists='replace',index=False,method='multi',chunksize=chunkSize)
+        df.to_sql('fire_incidents_RAW', engine,schema='sources', if_exists='replace',index=False,method='multi',chunksize=chunkSize)
     else:
-        df.to_sql('STG_RAW', engine, if_exists='append',index=False,method='multi',chunksize=chunkSize)  
+        df.to_sql('fire_incidents_RAW', engine,schema='sources',if_exists='append',index=False,method='multi',chunksize=chunkSize)  
 
     start = start + chunkSize    
     print("Loaded ",start," records of ",recordCount, "total records")    

@@ -1,0 +1,17 @@
+FROM ubuntu:20.04 as seed-ready
+RUN apt-get update
+RUN apt-get install -y python3-pip
+RUN pip3 install pandas
+RUN pip3 install sodapy
+RUN pip3 install sqlalchemy
+RUN apt-get install -y python3-psycopg2
+COPY /files/getFireData.py /etc/getFireData.py
+RUN chmod 0744 /etc/getFireData.py
+
+
+FROM seed-ready
+RUN apt-get update && apt-get -y install cron
+COPY /files/cronroot /etc/cron.d/root
+RUN chmod +x /etc/cron.d/root
+RUN crontab /etc/cron.d/root
+RUN touch /var/log/cron.log
